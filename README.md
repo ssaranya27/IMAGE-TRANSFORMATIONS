@@ -8,19 +8,20 @@ To perform image transformation such as Translation, Scaling, Shearing, Reflecti
 Anaconda - Python 3.7
 
 ## Algorithm:
-### Step1: Import required libraries: numpy, cv2, and matplotlib.pyplot.
+### Step1: 
+Import required libraries: numpy, cv2, and matplotlib.pyplot.
 <br>
-
-### Step2: Read the input image and convert it from BGR to RGB format.
+### Step2:
+Read the input image and convert it from BGR to RGB format.
 <br>
-
-### Step3: Apply image transformations — translation, scaling, shearing, reflection, rotation, and cropping.
+### Step3:
+Apply image transformations — translation, scaling, shearing, reflection, rotation, and cropping.
 <br>
-
-### Step4: Use appropriate transformation matrices with cv2.warpAffine() for each operation.
+### Step4:
+Use appropriate transformation matrices with cv2.warpAffine() for each operation.
 <br>
-
-### Step5: Display the original and transformed images using matplotlib.pyplot.imshow().
+### Step5:
+Display the original and transformed images using matplotlib.pyplot.imshow().
 <br>
 
 ## Program:
