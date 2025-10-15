@@ -1,37 +1,61 @@
-import cv2
 import numpy as np
+import cv2
 import matplotlib.pyplot as plt
-# --------------------- Helper Function ---------------------
-def show_image(img, title="Image"):
-    """
-    Display an image using matplotlib with proper RGB conversion.
-    """
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    plt.title(title)
-    plt.axis('off')
 
-# --------------------- Load Image ---------------------
-image = cv2.imread('image.jpg')  # Replace with your image path
+# ---------- i) Image Translation ----------
+input_img = cv2.imread("color image of flower.jpg")
+input_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2RGB)   # convert BGR → RGB for matplotlib
 
-if image is None:
-    print("Error: Image not found")
-else:
-    (h, w) = image.shape[:2]
+plt.axis('off')
+plt.imshow(input_img)
+plt.title("Original Image")
+plt.show()
 
-  # --------------------- 1. Translation ---------------------
-  tx, ty = 100, 50  # Move 100 pixels right and 50 pixels down
-  translation_matrix = np.float32([[1, 0, tx], [0, 1, ty]])
-  translated = cv2.warpAffine(image, translation_matrix, (w, h))
+rows, cols, dim = input_img.shape
 
-    # --------------------- 2. Scaling ---------------------
-    # Resize by 1.5x horizontally and 0.75x vertically
-    scaled = cv2.resize(image, None, fx=1.5, fy=0.75, interpolation=cv2.INTER_LINEAR)
+# Translation matrix: move 20px right, 50px down
+M = np.float32([[1, 0, 20],
+                [0, 1, 50]])
+
+translated_img = cv2.warpAffine(input_img, M, (cols, rows))
+
+plt.axis('off')
+plt.imshow(translated_img)
+plt.title("Translated Image")
+plt.show()
 
 
+# ---------- ii) Image Scaling ----------
+# Scaling matrix (1.5x horizontally, 1.5x vertically)
+scale_M = np.float32([[1.5, 0, 0],
+                      [0, 1.5, 0]])
 
- # --------------------- 3. Shearing ---------------------
-    # Horizontal shear
-shear_matrix_x = np.float32([[1, 0.5, 0], [0, 1, 0]])
-sheared_x = cv2.warpAffine(image, shear_matrix_x, (int(w + 0.5*h), h))
+scaled_img = cv2.warpAffine(input_img, scale_M, (int(cols * 1.5), int(rows * 1.5)))
+
+plt.axis('off')
+plt.imshow(scaled_img)
+plt.title("Scaled Image")
+plt.show()
 
 
+# ---------- iii) Image Shearing ----------
+# Shear in X direction
+M_x = np.float32([[1, 0.2, 0],
+                  [0, 1, 0]])
+
+# Shear in Y direction
+M_y = np.float32([[1, 0, 0],
+                  [0.2, 1, 0]])
+
+sheared_img_xaxis = cv2.warpAffine(input_img, M_x, (cols, rows))
+sheared_img_yaxis = cv2.warpAffine(input_img, M_y, (cols, rows))
+
+plt.axis('off')
+plt.imshow(sheared_img_xaxis)
+plt.title("Sheared Image (X-axis)")
+plt.show()
+
+plt.axis('off')
+plt.imshow(sheared_img_yaxis)
+plt.title("Sheared Image (Y-axis)")
+plt.show()
